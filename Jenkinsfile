@@ -15,7 +15,6 @@ pipeline {
         echo "appName: ${appName}"
         echo "gitSourceUrl: ${gitSourceUrl}"
         echo "gitSourceRef: ${gitSourceRef}"
-        echo "Nexus user: ${env.MAVEN_SERVER_USERNAME}"
       }
     }
     stage('Checkout') {
@@ -26,29 +25,22 @@ pipeline {
         script {
           pom = readMavenPom file: 'pom.xml'
           projectVersion = pom.version
-          echo "App version: ${projectVersion}"
         }
       }
     }
     stage('Build JAR') {
       steps {
-        echo "Build the app."
-        sh "mvn deploy"
+	echo "Build app.  Version: ${projectVersion}"
+        sh "mvn clean package"
       }
     }
-    stage('Quality Check') {
-      steps {
-        echo "Quality Check..."
-        sh "mvn sonar:sonar"
-      }
-    }                  
     stage('Build Image') {
       steps {
         script {
           echo "Build container image."
           openshift.withCluster() {
             openshift.withProject('cicd') {
-              sh "oc start-build ${appName}-s2i-build --from-file=target/app.jar -n cicd --follow"
+              sh "oc start-build ${appName}-build --from-file=target/app.jar -n cicd --follow"
             }
           }
         }
@@ -57,13 +49,13 @@ pipeline {
     stage("Tag DEV") {
       steps {
         script {
-          echo "Tag image to DEV"
-          openshift.withCluster() {
-            openshift.withProject('cicd') {
-              openshift.tag("${appName}:latest", "${appName}:dev")
-            }
-          }
-        }
+	  echo "Tag image to DEV"
+	  openshift.withCluster() {
+	    openshift.withProject('cicd') {
+	      openshift.tag("${appName}:latest", "${appName}:dev")
+	    }
+	  }
+	}
       }
     }
     stage('Deploy DEV') {
@@ -71,7 +63,7 @@ pipeline {
         script {
           echo "Deploy to DEV."
           openshift.withCluster() {
-            openshift.withProject("${appName}-dev") {
+            openshift.withProject("demo-dev") {
               echo "Rolling out to DEV."
               def dc = openshift.selector('dc', "${appName}")
               dc.rollout().latest()
@@ -81,31 +73,25 @@ pipeline {
         }
       }
     }
-    stage('Integration Tests') {
-      steps {
-        echo "Running Integration tests..."
-        //sh "mvn verify -Pfailsafe"
-      }
-    }
-    stage("Tag UAT") {
+    stage("Tag TEST") {
       steps {
         script {
-          echo "Tag image to UAT"
-          openshift.withCluster() {
-            openshift.withProject('cicd') {
-              openshift.tag("${appName}:dev", "${appName}:uat")
-            }
-          }
-        }
+	  echo "Tag image to TEST"
+	  openshift.withCluster() {
+	    openshift.withProject('cicd') {
+	      openshift.tag("${appName}:dev", "${appName}:test")
+	    }
+	  }
+	}
       }
     }
-    stage('Deploy UAT') {
+    stage('Deploy TEST') {
       steps {
         script {
-          echo "Deploy to UAT."
+          echo "Deploy to TEST."
           openshift.withCluster() {
-            openshift.withProject("${appName}-uat") {
-              echo "Rolling out to UAT."
+            openshift.withProject("demo-test") {
+              echo "Rolling out to TEST."
               def dc = openshift.selector('dc', "${appName}")
               dc.rollout().latest()
               dc.rollout().status()
