@@ -1,0 +1,41 @@
+def gitSourceUrl=env.GIT_SOURCE_URL
+def gitSourceRef=env.GIT_SOURCE_REF
+def project=env.PROJECT_NAME
+def projectVersion=""	
+
+pipeline {
+  agent {
+    label 'maven'
+  }
+  stages {
+
+    stage('Initialize') {
+      steps {
+        echo "gitSourceUrl: ${gitSourceUrl}"
+        echo "gitSourceRef: ${gitSourceRef}"
+        echo "Nexus user: ${env.MAVEN_SERVER_USERNAME}"
+        echo "GitHub user: ${env.GITHUB_USERNAME}"
+        sh "git config --global user.email \"apitt@redhat.com\""
+        sh "git config --global user.name \"Andrew\""
+      }
+    }
+    stage('Checkout') {
+      steps {
+        echo "Checkout source."
+        git url: "${gitSourceUrl}", branch: "${gitSourceRef}"
+        echo "Read POM info."
+        script {
+          pom = readMavenPom file: 'pom.xml'
+          projectVersion = pom.version
+          echo "App version: ${projectVersion}"
+        }
+      }
+    }
+    stage('Build JAR') {
+      steps {
+        echo "Build the app."
+        sh "mvn release:clean release:prepare release:perform -Drelease=true"
+      }
+    }
+  }
+}
