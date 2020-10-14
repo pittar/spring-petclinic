@@ -1,5 +1,11 @@
 # Spring PetClinic Sample Application
 
+## CodeReady Workspaces
+
+[Open in CodeReady Workspaces](https://codeready-openshift-workspaces.apps.cluster-14f5.14f5.example.opentlc.com/f?url=https://github.com/pittar/spring-petclinic)
+
+## Pet Clinic
+
 <img width="1042" alt="petclinic-screenshot" src="https://cloud.githubusercontent.com/assets/838318/19727082/2aee6d6c-9b8e-11e6-81fe-e889a5ddfded.png">
 
 
