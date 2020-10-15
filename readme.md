@@ -2,7 +2,7 @@
 
 ## CodeReady Workspaces
 
-[Open in CodeReady Workspaces](https://console-openshift-console.apps.cluster-5d65.5d65.example.opentlc.com/f?url=https://github.com/pittar/spring-petclinic)
+[Open in CodeReady Workspaces](https://codeready-openshift-workspaces.apps.cluster-5d65.5d65.example.opentlc.com/f?url=https://github.com/pittar/spring-petclinic)
 
 ## Pet Clinic
 
