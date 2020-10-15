@@ -1,0 +1,41 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Maven@3
+  displayName: maven package
+  inputs:
+    mavenPomFile: 'pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    goals: 'package'
+- task: CmdLine@2
+  displayName: list directory contents.
+  inputs:
+    script: |
+      echo "Listing current dir and contents"
+      pwd
+      ls -la
+      echo "Target dir contents:"
+      echo "Artifact Staging dir: $(Build.ArtifactStagingDirectory)"
+      echo "Local dir: $(Build.Repository.LocalPath)"
+      echo "Staging dir: $(Build.StagingDirectory)"
+      echo "Pipeline dir: $(Pipeline.Workspace)"
+      ls -la "$(Build.Repository.LocalPath)"
+- task: oc-cmd@2
+  displayName: oc - start s2i build
+  inputs:
+    openshiftService: 'opentlc-mgr'
+    cmd: 'oc start-build petclinic-s2i-build --from-file="$(Build.Repository.LocalPath)"/target/app.jar -n cicd --follow'
