@@ -21,7 +21,7 @@ pipeline {
     stage('Checkout') {
       steps {
         echo "Checkout source."
-        git url: "${gitSourceUrl}", branch: "${gitSourceRef}"
+        git url: "${gitSourceUrl}", branch: "${gitSourceRef}", credentialsId: 'cicd-github-auth'
         echo "Read POM info."
         script {
           pom = readMavenPom file: 'pom.xml'
