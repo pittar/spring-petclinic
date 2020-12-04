@@ -18,6 +18,11 @@ pipeline {
         echo "Nexus user: ${env.MAVEN_SERVER_USERNAME}"
       }
     }
+    stage('Manual Approval') {
+      steps {
+        input "Continue with build?"
+      }
+    }
     stage('Checkout') {
       steps {
         echo "Checkout source."
