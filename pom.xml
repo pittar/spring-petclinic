@@ -3,13 +3,9 @@
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <!-- groupId>org.springframework.samples</groupId -->
-  <!-- artifactId>spring-petclinic</artifactId -->
-  <!-- version>2.3.0.BUILD-SNAPSHOT</version -->
-
-  <groupId>ca.pitt.temp</groupId>
-  <artifactId>petclinic-common</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+  <groupId>org.springframework.samples</groupId>
+  <artifactId>spring-petclinic</artifactId>
+  <version>2.3.0.BUILD-SNAPSHOT</version>
 	
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -17,7 +13,7 @@
     <version>2.3.3.RELEASE</version>
   </parent>
   
-  <name>petclinic-common</name>
+  <name>petclinic</name>
 
   <properties>
 
@@ -58,6 +54,11 @@
 	</scm>
 
   <dependencies>
+	<dependency>
+	  <groupId>ca.pitt.temp</groupId>
+	  <artifactId>petclinic-common</artifactId>
+	  <version>1.0.0-SNAPSHOT</version>
+	</dependency>
     <!-- Spring and Spring Boot dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
