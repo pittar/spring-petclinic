@@ -36,6 +36,14 @@ components:
     type: chePlugin
 apiVersion: 1.0.0
 commands:
+  - name: Log into OpenShift
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/fuse-openapi-to-java'
+        type: exec
+        command: |
+          echo "Logging in to this cluster."
+          oc login ${KUBERNETES_SERVICE_HOST}
+        component: oc
   - name: build
     actions:
       - workdir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
