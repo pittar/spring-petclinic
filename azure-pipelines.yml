@@ -40,6 +40,11 @@ steps:
     openshiftService: 'opentlc-mgr'
     cmd: 'oc start-build petclinic-s2i-build --from-file="$(Build.Repository.LocalPath)"/target/app.jar -n cicd --follow'
 - task: oc-cmd@2
+  displayName: oc - tag DEV
+  inputs:
+    openshiftService: 'opentlc-mgr'
+    cmd: 'oc tag petclinic:latest petclinic:dev -n cicd'
+- task: oc-cmd@2
   displayName: oc - rollout to DEV
   inputs:
     openshiftService: 'opentlc-mgr'
@@ -49,6 +54,11 @@ steps:
   inputs:
     openshiftService: 'opentlc-mgr'
     cmd: 'oc rollout status dc/petclinic -n petclinic-dev'
+- task: oc-cmd@2
+  displayName: oc - tag UAT
+  inputs:
+    openshiftService: 'opentlc-mgr'
+    cmd: 'oc tag petclinic:dev petclinic:uat -n cicd'
 - task: oc-cmd@2
   displayName: oc - rollout to UAT
   inputs:
