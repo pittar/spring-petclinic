@@ -3,7 +3,7 @@ metadata:
 projects:
   - name: spring-petclinic
     source:
-      location: 'git@github.com:pittar/spring-petclinic.git'
+      location: 'https://github.com/pittar/spring-petclinic.git'
       type: 'git'
 components:
   - id: redhat/java8/latest
