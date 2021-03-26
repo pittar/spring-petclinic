@@ -206,7 +206,7 @@
             <id>nohttp-checkstyle-validation</id>
             <phase>validate</phase>
             <configuration>
-              <skip>true</skip>
+              <skip>false</skip>
               <configLocation>src/checkstyle/nohttp-checkstyle.xml</configLocation>
               <suppressionsLocation>src/checkstyle/nohttp-checkstyle-suppressions.xml</suppressionsLocation>
               <encoding>UTF-8</encoding>
@@ -246,7 +246,7 @@
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>${jacoco.version}</version>
         <configuration>
-          <skip>true</skip>
+          <skip>false</skip>
         </configuration>
         <executions>
           <execution>
@@ -277,7 +277,7 @@
           </execution>
         </executions>
         <configuration>
-          <skip>true</skip>
+          <skip>false</skip>
           <verbose>true</verbose>
           <dateFormat>yyyy-MM-dd'T'HH:mm:ssZ</dateFormat>
           <generateGitPropertiesFile>true</generateGitPropertiesFile>
