@@ -1,5 +1,6 @@
 # Spring PetClinic Sample Application
 
+Test
 
 ## Pet Clinic
 
