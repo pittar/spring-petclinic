@@ -1,6 +1,6 @@
 # Spring PetClinic Sample Application
 
-Test
+Build trigger.
 
 ## Pet Clinic
 
