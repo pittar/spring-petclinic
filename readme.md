@@ -1,8 +1,5 @@
 # Spring PetClinic Sample Application
 
-## CodeReady Workspaces
-
-[Open in CodeReady Workspaces](<crw url>/f?url=https://github.com/pittar/spring-petclinic)
 
 ## Pet Clinic
 
