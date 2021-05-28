@@ -37,9 +37,7 @@ pipeline {
     }
     stage('Build JAR') {
       steps {
-        echo "Build the app."
-        sh "java -version"
-        sh "mvn deploy"
+        sh "mvn clean install"
       }
     }
     stage('Quality Check') {
