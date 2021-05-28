@@ -16,8 +16,11 @@ pipeline {
         echo "gitSourceUrl: ${gitSourceUrl}"
         echo "gitSourceRef: ${gitSourceRef}"
         echo "Nexus user: ${env.MAVEN_SERVER_USERNAME}"
+        echo "JAVA_HOME: ${env.JAVA_HOME}"
         echo "JavaC version:"
         sh "javac -version"
+        echo "Java version:"
+        sh "java -version"
       }
     }
     stage('Checkout') {
