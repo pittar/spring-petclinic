@@ -38,6 +38,7 @@ pipeline {
     stage('Build JAR') {
       steps {
         echo "Build the app."
+        sh "java -version"
         sh "mvn deploy"
       }
     }
