@@ -39,7 +39,7 @@ pipeline {
       steps {
         echo "Build the app."
         sh "java -version"
-        sh "mvn deploy"
+        sh "mvn deploy -X"
       }
     }
     stage('Quality Check') {
