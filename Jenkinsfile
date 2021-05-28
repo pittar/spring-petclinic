@@ -6,7 +6,7 @@ def projectVersion=""
 
 pipeline {
   agent {
-    label 'maven'
+    label 'maven36-java11'
   }
   stages {
 
@@ -16,6 +16,8 @@ pipeline {
         echo "gitSourceUrl: ${gitSourceUrl}"
         echo "gitSourceRef: ${gitSourceRef}"
         echo "Nexus user: ${env.MAVEN_SERVER_USERNAME}"
+        echo "JavaC version:"
+        sh "javac -version"
       }
     }
     stage('Checkout') {
