@@ -8,6 +8,7 @@ target/*
 *.iml
 /target
 .sts4-cache/
+.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
