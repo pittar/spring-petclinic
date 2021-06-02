@@ -18,8 +18,6 @@
 
     <!-- Generic properties -->
     <java.version>11</java.version>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>  
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -198,8 +196,8 @@
               <additionalProperties>
                 <encoding.source>${project.build.sourceEncoding}</encoding.source>
                 <encoding.reporting>${project.reporting.outputEncoding}</encoding.reporting>
-                <java.source>11</java.source>
-                <java.target>11</java.target>
+                <java.source>${maven.compiler.source}</java.source>
+                <java.target>${maven.compiler.target}</java.target>
               </additionalProperties>
             </configuration>
           </execution>
