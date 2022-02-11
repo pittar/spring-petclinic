@@ -2,7 +2,6 @@ def appName=env.APP_NAME
 def gitSourceUrl=env.GIT_SOURCE_URL
 def gitSourceRef=env.GIT_SOURCE_REF
 def project=env.PROJECT_NAME
-def projectVersion=""	
 
 pipeline {
   agent {
@@ -15,19 +14,18 @@ pipeline {
         echo "appName: ${appName}"
         echo "gitSourceUrl: ${gitSourceUrl}"
         echo "gitSourceRef: ${gitSourceRef}"
-        echo "Nexus user: ${env.MAVEN_SERVER_USERNAME}"
       }
     }
     stage('Checkout') {
       steps {
         echo "Checkout source."
         git url: "${gitSourceUrl}", branch: "${gitSourceRef}"
-        echo "Read POM info."
-        script {
-          pom = readMavenPom file: 'pom.xml'
-          projectVersion = pom.version
-          echo "App version: ${projectVersion}"
-        }
+//         echo "Read POM info."
+//         script {
+//           pom = readMavenPom file: 'pom.xml'
+//           projectVersion = pom.version
+//           echo "App version: ${projectVersion}"
+//         }
       }
     }
     stage('Build JAR') {
