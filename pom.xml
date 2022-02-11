@@ -134,6 +134,8 @@
   </dependencies>
 
   <build>
+    <!-- Consistent name of the jar file that is produced. -->
+    <finalName>app</finalName>
     <plugins>
       <plugin>
         <groupId>io.spring.javaformat</groupId>
