@@ -33,12 +33,12 @@ pipeline {
         sh "mvn clean install"
       }
     }
-    stage('Quality Check') {
-      steps {
-        echo "Quality Check..."
-        sh "mvn sonar:sonar"
-      }
-    }                  
+//     stage('Quality Check') {
+//       steps {
+//         echo "Quality Check..."
+//         sh "mvn sonar:sonar"
+//       }
+//     }                  
     stage('Build Image') {
       steps {
         script {
