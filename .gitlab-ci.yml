@@ -1,12 +1,5 @@
 variables:
-  #MAVEN_OPTS: "-Djava.awt.headless=true -Dmaven.repo.local=~/tmp/m2/repository"
-  #MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
   STORAGE_DRIVER: "vfs"
-
-
-#cache:
-#  paths:
-#    - ~/tmp/m2/repository
 
 stages:
   - compile
