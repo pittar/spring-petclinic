@@ -1,0 +1,41 @@
+variables:
+  #MAVEN_OPTS: "-Djava.awt.headless=true -Dmaven.repo.local=~/tmp/m2/repository"
+  #MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
+  STORAGE_DRIVER: "vfs"
+
+
+#cache:
+#  paths:
+#    - ~/tmp/m2/repository
+
+stages:
+  - compile
+  - build
+  - deploy
+
+maven-build:
+  image: registry.access.redhat.com/ubi8/openjdk-11:1.13
+  stage: compile
+  script: "mvn clean package"
+  artifacts:
+    paths:
+      - target/*.jar
+      - Containerfile
+
+image-build:
+  image: registry.access.redhat.com/ubi8/buildah:8.6
+  stage: build
+  needs: [maven-build]
+  script:
+    - buildah login -u "$QUAY_USERNAME" -p "$QUAY_PASSWORD" quay.io
+    - buildah bud -t quay.io/pittar/petclinic-gl:latest .
+    - buildah push quay.io/pittar/petclinic-gl:latest
+
+rollout-app:
+  image: quay.io/pittar/tekton-oc-toolbox:latest
+  stage: deploy
+  needs: [image-build]
+  script:
+    - oc whoami
+    - oc rollout restart deployment petclinic-gl -n pcdev
+    - oc rollout status deployment petclinic-gl -n pcdev
