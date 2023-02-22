@@ -16,3 +16,4 @@ and it is possible to inspect the content of the database using the `jdbc:h2:mem
 A similar setup is provided for MySql in case a persistent database configuration is needed. Note that whenever the database type is changed, the app needs to be run with a different profile: `spring.profiles.active=mysql` for MySql.
 
 
+Test
