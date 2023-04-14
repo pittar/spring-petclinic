@@ -1,4 +1,5 @@
-FROM registry.access.redhat.com/ubi8/openjdk-11-runtime:1.9
+#FROM registry.access.redhat.com/ubi8/openjdk-11-runtime:1.9
+FROM registry.access.redhat.com/ubi8/openjdk-11-runtime:1.15
 
 USER root
 
