@@ -28,8 +28,17 @@
     <webjars-jquery.version>2.2.4</webjars-jquery.version>
     <wro4j.version>1.8.0</wro4j.version>
 
-    <jacoco.version>0.8.5</jacoco.version>
-    <nohttp-checkstyle.version>0.0.4.RELEASE</nohttp-checkstyle.version>
+    <sonar.projectKey>petclinic</sonar.projectKey>
+    <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+    <!-- <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco-report</sonar.jacoco.reportPath> -->
+    <!-- <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../target/jacoco-report/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths> -->
+    <sonar.dependencyCheck.jsonReportPath>target/dependency-check-report.json</sonar.dependencyCheck.jsonReportPath>
+    <sonar.java.pmd.reportPaths>target/pmd.xml</sonar.java.pmd.reportPaths>
+    <sonar.java.checkstyle.reportPaths>target/checkstyle-result.xml</sonar.java.checkstyle.reportPaths>
+	  
+    <jacoco.version>0.8.9</jacoco.version>
+    <nohttp-checkstyle.version>0.0.11</nohttp-checkstyle.version>
     <spring-format.version>0.0.25</spring-format.version>
 
     <project.scm.id>github-petclinic</project.scm.id>
@@ -339,7 +348,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-pmd-plugin</artifactId>
-						<version>3.13.0</version>
+						<version>3.20.0</version>
 						<executions>
 							<execution>
 								<id>validate</id>
@@ -353,7 +362,7 @@
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
-						<version>0.8.5</version>
+						<version>0.8.9</version>
 						<executions>
 							<execution>
 								<id>prepare-agent</id>
@@ -372,7 +381,7 @@
 					<plugin>
 						<groupId>org.owasp</groupId>
 						<artifactId>dependency-check-maven</artifactId>
-						<version>8.2.1</version>
+						<version>5.3.1</version>
 						<configuration>
 							<format>JSON</format>
 						</configuration>
@@ -387,7 +396,7 @@
 					<plugin>
 						<groupId>org.sonarsource.scanner.maven</groupId>
 						<artifactId>sonar-maven-plugin</artifactId>
-						<version>3.7.0.1746</version>
+						<version>3.9.1.2184</version>
 					</plugin>
 					<plugin>
 						<artifactId>maven-surefire-plugin</artifactId>
