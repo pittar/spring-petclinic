@@ -5,7 +5,8 @@ USER root
 
 RUN rpm -e --nodeps $(rpm -qa '*rpm*' '*dnf*' '*libsolv*' '*hawkey*' 'yum*')
 
-USER 1001
+# The same user defined in the base image.
+USER 185
 
 COPY target/app.jar $HOME
 
