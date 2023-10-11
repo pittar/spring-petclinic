@@ -93,10 +93,10 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
         <exclusions>
-            <exclusion>
-                <groupId>org.junit.vintage</groupId>
-                <artifactId>junit-vintage-engine</artifactId>
-            </exclusion>
+          <exclusion>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+          </exclusion>
         </exclusions>
     </dependency>
 
@@ -108,10 +108,15 @@
     </dependency>
 
     <!-- Databases - Uses H2 by default -->
-    <dependency>
+    <!-- <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>runtime</scope>
+    </dependency> -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>2.1.214</version>
     </dependency>
     <dependency>
       <groupId>mysql</groupId>
@@ -437,13 +442,13 @@
 			</build>
 		</profile>
 		<profile>
-            <id>release</id>
-            <activation>
-                <property>
-                    <name>release</name>
-                    <value>true</value>
-                </property>
-            </activation>
+      <id>release</id>
+      <activation>
+        <property>
+          <name>release</name>
+          <value>true</value>
+        </property>
+      </activation>
 			<build>
 				<plugins>
 					<plugin>
@@ -457,7 +462,7 @@
 					</plugin>
 				</plugins>
 			</build>
-        </profile>
+    </profile>
     <profile>
       <id>m2e</id>
       <activation>
