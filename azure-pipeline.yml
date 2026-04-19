@@ -3,9 +3,11 @@ trigger: none
 variables:
   IMAGE_REPOSITORY: pittar/petclinic
   IMAGE_TAG: ado
+  ROX_VERSION: 4.10.1
+  ROXCTL_BIN: $(Pipeline.Workspace)/roxctl-bin
 
 pool:
-  vmImage: ubuntu-22.04
+  vmImage: ubuntu-latest
 
 stages:
   - stage: BuildAndPush
@@ -16,13 +18,31 @@ stages:
         steps:
           - checkout: self
 
-          - task: Maven@3
+          - task: Maven@4
             displayName: Build with Maven
             inputs:
               mavenPomFile: pom.xml
               goals: package
               options: -DskipTests
               publishJUnitResults: false
+
+          - task: Cache@2
+            displayName: Cache roxctl
+            inputs:
+              key: '"roxctl" | "$(ROX_VERSION)"'
+              path: $(ROXCTL_BIN)
+              cacheHitVar: ROXCTL_CACHE_HIT
+
+          - task: Bash@3
+            displayName: Install roxctl
+            condition: ne(variables.ROXCTL_CACHE_HIT, 'true')
+            inputs:
+              targetType: inline
+              script: |
+                mkdir -p $(ROXCTL_BIN)
+                curl -s -L -o $(ROXCTL_BIN)/roxctl \
+                  https://mirror.openshift.com/pub/rhacs/assets/$(ROX_VERSION)/bin/Linux/roxctl
+                chmod +x $(ROXCTL_BIN)/roxctl
 
           - task: Docker@2
             displayName: Build and Push to quay.io
@@ -32,3 +52,35 @@ stages:
               repository: $(IMAGE_REPOSITORY)
               dockerfile: Containerfile
               tags: $(IMAGE_TAG)
+
+          - task: Bash@3
+            displayName: roxctl image scan
+            env:
+              ROX_API_TOKEN: $(ROX_API_TOKEN)
+            inputs:
+              targetType: inline
+              script: |
+                $(ROXCTL_BIN)/roxctl image scan \
+                  --insecure-skip-tls-verify \
+                  -e $(ROX_CENTRAL_ADDRESS) \
+                  --image quay.io/$(IMAGE_REPOSITORY):$(IMAGE_TAG)
+
+          - task: Bash@3
+            displayName: roxctl image check
+            env:
+              ROX_API_TOKEN: $(ROX_API_TOKEN)
+            inputs:
+              targetType: inline
+              script: |
+                $(ROXCTL_BIN)/roxctl image check \
+                  --insecure-skip-tls-verify \
+                  -e $(ROX_CENTRAL_ADDRESS) \
+                  --image quay.io/$(IMAGE_REPOSITORY):$(IMAGE_TAG)
+
+          - task: Docker@2
+            displayName: Tag image as ado-dev
+            inputs:
+              command: push
+              containerRegistry: quay-service-connection
+              repository: $(IMAGE_REPOSITORY)
+              tags: ado-dev
