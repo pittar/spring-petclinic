@@ -5,7 +5,7 @@ variables:
   IMAGE_TAG: ado
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: ubuntu-22.04
 
 stages:
   - stage: BuildAndPush
