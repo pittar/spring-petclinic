@@ -1,12 +1,5 @@
 trigger: none
 
-resources:
-  repositories:
-    - repository: petclinic
-      type: github
-      name: pittar/spring-petclinic
-ref: refs/heads/main
-
 variables:
   IMAGE_REPOSITORY: pittar/petclinic
   IMAGE_TAG: ado
@@ -21,7 +14,7 @@ stages:
       - job: BuildJob
         displayName: Maven Build and Container Push
         steps:
-          - checkout: petclinic
+          - checkout: self
 
           - task: Maven@3
             displayName: Build with Maven
